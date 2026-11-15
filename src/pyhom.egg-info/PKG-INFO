@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: pyhom
+Version: 0.1.0
+Summary: Homogenization of heterogeneous materials (Hill tensor, Mori-Tanaka, self-consistent)
+Requires-Python: >=3.9
+Requires-Dist: numpy
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: scipy; extra == "dev"
+Requires-Dist: matplotlib; extra == "dev"

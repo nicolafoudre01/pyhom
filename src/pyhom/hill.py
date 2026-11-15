@@ -1,48 +1,15 @@
+"""
+Hill (P) tensor of an ellipsoidal inclusion by numerical integration over the sphere.
+
+    fC0(x, y, C4, a)       integrand at one point,  x = (1 - cos(theta)) / 2 ,  y = phi / (2 pi)
+    int2v(f, ...)          double integral (tensor-product Gauss-Legendre)
+    tenseurP(a1,a2,a3,C0)  P = int2v(fC0, x in [0,1], y in [0,1/2]) * 1/2
+
+Tensors are 6x6 Mandel matrices (see tensors.py).
+"""
 import numpy as np
 
-S2 = np.sqrt(2.0)
-_PAIRS = [(0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2)]
-_W = np.array([1, 1, 1, S2, S2, S2])
-
-
-def mandel_to_t4(M):
-    """6x6 Mandel -> 3x3x3x3."""
-    T = np.zeros((3, 3, 3, 3))
-    for I, (i, j) in enumerate(_PAIRS):
-        for J, (k, l) in enumerate(_PAIRS):
-            v = M[I, J] / (_W[I] * _W[J])
-            for (a, b) in {(i, j), (j, i)}:
-                for (c, d) in {(k, l), (l, k)}:
-                    T[a, b, c, d] = v
-    return T
-
-
-def t4_to_mandel(T):
-    """3x3x3x3 -> 6x6 Mandel."""
-    M = np.empty((6, 6))
-    for I, (i, j) in enumerate(_PAIRS):
-        for J, (k, l) in enumerate(_PAIRS):
-            M[I, J] = _W[I] * _W[J] * T[i, j, k, l]
-    return M
-
-
-def rotate_mandel(C, R):
-    """Rotate a Mandel 6x6 tensor with the 3x3 rotation matrix R."""
-    Q = np.empty((6, 6))
-    for I, (i, j) in enumerate(_PAIRS):
-        for J, (k, l) in enumerate(_PAIRS):
-            Q[I, J] = _W[I] * _W[J] * 0.5 * (R[i, k] * R[j, l] + R[i, l] * R[j, k])
-    return Q @ C @ Q.T
-
-
-def cubic_stiffness(c11, c12, c44):
-    """Cubic stiffness (crystal frame) in Mandel notation."""
-    C = np.zeros((6, 6))
-    C[:3, :3] = c12
-    C[range(3), range(3)] = c11
-    C[3, 3] = C[4, 4] = C[5, 5] = 2 * c44
-    return C
-
+from .tensors import _PAIRS, _W, mandel_to_t4
 
 _I1 = np.array([p[0] for p in _PAIRS])
 _I2 = np.array([p[1] for p in _PAIRS])
