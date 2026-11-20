@@ -12,7 +12,7 @@ from pyhom import isotropic_stiffness, bulk_shear, mori_tanaka, selfconsistent
 L = [isotropic_stiffness(100, 40), isotropic_stiffness(200, 100)]
 fv = [0.5, 0.5]
 print(bulk_shear(selfconsistent(fv, L)[0]))
-print(bulk_shear(mori_tanaka(fv, L, matrix=0)))
+print(bulk_shear(moritanaka(fv, L, matrix=0)))
 ```
 
 **Convention**: fourth-order tensors are 6x6 Mandel matrices, MFront ordering
