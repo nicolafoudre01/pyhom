@@ -1,7 +1,6 @@
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?logo=opensourceinitiative)
 
-
 # pyhom
 
 Homogenization of the effective elastic properties of heterogeneous materials.
@@ -27,7 +26,6 @@ Install and test:
 For usage as a library in another project, run :
 
     pip install git+https://github.com/nicolafoudre01/pyhom.git
-
 
 ## License
 
