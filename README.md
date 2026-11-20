@@ -7,7 +7,7 @@ Homogenization of the effective elastic properties of heterogeneous materials.
 Only depends on `numpy`.
 
 ```python
-from pyhom import isotropic_stiffness, bulk_shear, mori_tanaka, selfconsistent
+from pyhom import isotropic_stiffness, bulk_shear, moritanaka, selfconsistent
 
 L = [isotropic_stiffness(100, 40), isotropic_stiffness(200, 100)]
 fv = [0.5, 0.5]
