@@ -20,8 +20,14 @@ Install and test:
     pip install -e .[dev]
     pytest
 
+<<<<<<< HEAD
 
 ## License
 
 This project is licensed under the MIT License.
 See the [LICENSE](LICENSE) file for details
+=======
+For usage as a library in another project, run :
+
+    pip install git+https://github.com/nicolafoudre01/pyhom.git
+>>>>>>> c2163b675ba9ea48bade7eca1c4d7b1c29e81ed7
