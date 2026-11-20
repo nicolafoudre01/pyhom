@@ -1,7 +1,8 @@
-# pyhom
-
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?logo=opensourceinitiative)
+
+
+# pyhom
 
 Homogenization of the effective elastic properties of heterogeneous materials.
 Only depends on `numpy`.
