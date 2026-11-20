@@ -19,3 +19,7 @@ Install and test:
 
     pip install -e .[dev]
     pytest
+
+For usage as a library in another project, run :
+
+    pip install git+[pyhom REPOSITORY]
