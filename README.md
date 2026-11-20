@@ -22,4 +22,4 @@ Install and test:
 
 For usage as a library in another project, run :
 
-    pip install git+[pyhom REPOSITORY]
+    pip install git+https://github.com/nicolafoudre01/pyhom.git
