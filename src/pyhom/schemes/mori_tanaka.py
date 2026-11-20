@@ -3,7 +3,7 @@ import numpy as np
 from ..hill import tenseurP
 
 
-def mori_tanaka(fv, L_phases, matrix=0, a=(1.0, 1.0, 1.0), n=32):
+def moritanaka(fv, L_phases, matrix=0, a=(1.0, 1.0, 1.0), n=32):
     """Mori-Tanaka: P computed once, in the stiffness of the matrix phase."""
     fv = np.asarray(fv, float)
     L0 = np.asarray(L_phases[matrix], float)

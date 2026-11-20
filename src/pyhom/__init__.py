@@ -14,7 +14,7 @@ from .tensors import (mandel_to_t4, t4_to_mandel, rotate_mandel, cubic_stiffness
                       isotropic_stiffness, bulk_shear)
 from .hill import fC0, int2v, tenseurP
 from .bounds import voigt, reuss, hashin_shtrikman
-from .schemes import mori_tanaka, selfconsistent
+from .schemes import moritanaka, selfconsistent
 from .phase import Phase, Ellipsoid, LinearElastic, Aggregate
 
 __all__ = [
@@ -22,7 +22,7 @@ __all__ = [
     "isotropic_stiffness", "bulk_shear",
     "fC0", "int2v", "tenseurP",
     "voigt", "reuss", "hashin_shtrikman",
-    "mori_tanaka", "selfconsistent",
+    "moritanaka", "selfconsistent",
     "Phase", "Ellipsoid", "LinearElastic", "Aggregate",
 ]
 __version__ = "0.1.0"

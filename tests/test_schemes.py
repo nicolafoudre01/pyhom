@@ -1,6 +1,6 @@
 import numpy as np
 from helpers import rand_rotation
-from pyhom import (selfconsistent, mori_tanaka, voigt, reuss, hashin_shtrikman, bulk_shear,
+from pyhom import (selfconsistent, moritanaka, voigt, reuss, hashin_shtrikman, bulk_shear,
                    isotropic_stiffness, cubic_stiffness, rotate_mandel)
 
 SOFT, STIFF = (100.0, 40.0), (200.0, 100.0)
@@ -46,20 +46,20 @@ def test_sc_bounds_permutation_elongated_and_rotation():
 def test_mt_spheres_equal_hashin_shtrikman():
     Ls, Lh = isotropic_stiffness(*SOFT), isotropic_stiffness(*STIFF)
     f = 0.35                                                       # fraction of the stiff phase
-    k, mu = bulk_shear(mori_tanaka([1 - f, f], [Ls, Lh], 0))       # soft matrix: HS lower
+    k, mu = bulk_shear(moritanaka([1 - f, f], [Ls, Lh], 0))       # soft matrix: HS lower
     kh, mh = hashin_shtrikman(f, SOFT, STIFF)
     assert abs(k - kh) < 1e-10 and abs(mu - mh) < 1e-10
-    k, mu = bulk_shear(mori_tanaka([1 - f, f], [Ls, Lh], 1))       # stiff matrix: HS upper
+    k, mu = bulk_shear(moritanaka([1 - f, f], [Ls, Lh], 1))       # stiff matrix: HS upper
     kh, mh = hashin_shtrikman(1 - f, STIFF, SOFT)
     assert abs(k - kh) < 1e-10 and abs(mu - mh) < 1e-10
 
 
 def test_mt_limits_and_elongated():
     Ls, Lh = isotropic_stiffness(*SOFT), isotropic_stiffness(*STIFF)
-    assert np.abs(mori_tanaka([1., 0.], [Ls, Lh], 0) - Ls).max() < 1e-10
-    assert np.abs(mori_tanaka([0., 1.], [Ls, Lh], 0) - Lh).max() < 1e-10
+    assert np.abs(moritanaka([1., 0.], [Ls, Lh], 0) - Ls).max() < 1e-10
+    assert np.abs(moritanaka([0., 1.], [Ls, Lh], 0) - Lh).max() < 1e-10
     f = [0.65, 0.35]
-    Le = mori_tanaka(f, [Ls, Lh], 0, a=(5., 1., 1.), n=48)
+    Le = moritanaka(f, [Ls, Lh], 0, a=(5., 1., 1.), n=48)
     assert np.abs(Le - Le.T).max() < 1e-8
     assert np.linalg.eigvalsh(voigt(f, [Ls, Lh]) - Le).min() > 0
     assert np.linalg.eigvalsh(Le - reuss(f, [Ls, Lh])).min() > 0
@@ -68,5 +68,5 @@ def test_mt_limits_and_elongated():
 def test_mt_voids_finite_stiffness():
     """Voids (zero stiffness): MT stays finite and decreases with porosity."""
     Lm, Lv = isotropic_stiffness(*STIFF), np.zeros((6, 6))
-    ks = [bulk_shear(mori_tanaka([1 - p, p], [Lm, Lv], 0))[0] for p in (0.0, 0.1, 0.3, 0.6)]
+    ks = [bulk_shear(moritanaka([1 - p, p], [Lm, Lv], 0))[0] for p in (0.0, 0.1, 0.3, 0.6)]
     assert all(np.isfinite(ks)) and all(np.diff(ks) < 0)
