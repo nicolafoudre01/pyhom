@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 from helpers import spd_triclinic, rand_rotation
-from pyhom import (fC0, int2v, tenseurP, mandel_to_t4, t4_to_mandel, rotate_mandel,
+from pyhom import (fC0, int2v, ptensor, mandel_to_t4, t4_to_mandel, rotate_mandel,
                    cubic_stiffness, isotropic_stiffness)
 
 
@@ -38,7 +38,7 @@ def test_P_bcc_reference_cpp():
     p11, p12, p66 = 0.00283395, -0.00081998, 2 * 0.00117724
     Pref = np.diag([p11] * 3 + [p66] * 3)
     Pref[:3, :3] += p12 * (np.ones((3, 3)) - np.eye(3))
-    assert np.abs(tenseurP(1, 1, 1, C) - Pref).max() < 1e-8
+    assert np.abs(ptensor(1, 1, 1, C) - Pref).max() < 1e-8
 
 
 def test_P_isotropic_sphere_closed_form():
@@ -47,31 +47,31 @@ def test_P_isotropic_sphere_closed_form():
     beta = 3 * (k + 2 * mu) / (5 * mu * (3 * k + 4 * mu))
     J = np.zeros((6, 6)); J[:3, :3] = 1 / 3
     Pex = alpha * J + beta * (np.eye(6) - J)
-    assert np.abs(tenseurP(1, 1, 1, isotropic_stiffness(k, mu)) - Pex).max() < 1e-12
+    assert np.abs(ptensor(1, 1, 1, isotropic_stiffness(k, mu)) - Pex).max() < 1e-12
 
 
 def test_P_scale_permutation_convergence():
     C = cubic_stiffness(237.4, 134.7, 116.4)
-    assert np.abs(tenseurP(3, 3, 3, C) - tenseurP(1, 1, 1, C)).max() < 1e-12     # radius
-    P1, P2 = tenseurP(5, 1, 1, C, 64), tenseurP(1, 5, 1, C, 64)
+    assert np.abs(ptensor(3, 3, 3, C) - ptensor(1, 1, 1, C)).max() < 1e-12     # radius
+    P1, P2 = ptensor(5, 1, 1, C, 64), ptensor(1, 5, 1, C, 64)
     idx = [1, 0, 2, 3, 5, 4]                                                    # x <-> y
     assert np.abs(P1[np.ix_(idx, idx)] - P2).max() < 1e-8
-    assert np.abs(tenseurP(5, 1, 1, C, 32) - P1).max() / np.abs(P1).max() < 1e-4  # convergence
-    ev = np.linalg.eigvals(tenseurP(5, 2, 1, C, 64) @ C).real                    # Eshelby S = P C
+    assert np.abs(ptensor(5, 1, 1, C, 32) - P1).max() / np.abs(P1).max() < 1e-4  # convergence
+    ev = np.linalg.eigvals(ptensor(5, 2, 1, C, 64) @ C).real                    # Eshelby S = P C
     assert ev.min() > 0 and ev.max() < 1
 
 
 def test_P_triclinic_symmetry_and_rotation():
     C = spd_triclinic(1)
     a = (5.0, 2.0, 1.0)
-    P = tenseurP(*a, C, 48)
+    P = ptensor(*a, C, 48)
     assert np.max(np.abs(P - P.T)) / np.max(np.abs(P)) < 1e-8
     assert np.linalg.eigvalsh(0.5 * (P + P.T)).min() > 0
     R = rand_rotation(5)                                                        # sphere: any R
-    P0, P1 = tenseurP(1, 1, 1, C, 48), tenseurP(1, 1, 1, rotate_mandel(C, R), 48)
+    P0, P1 = ptensor(1, 1, 1, C, 48), ptensor(1, 1, 1, rotate_mandel(C, R), 48)
     assert np.abs(P1 - rotate_mandel(P0, R)).max() / np.abs(P0).max() < 1e-8
     for Rpi in (np.diag([1., -1, -1]), np.diag([-1., 1, -1]), np.diag([-1., -1, 1])):   # ellipsoid, pi rotations
-        P1 = tenseurP(*a, rotate_mandel(C, Rpi), 48)
+        P1 = ptensor(*a, rotate_mandel(C, Rpi), 48)
         assert np.abs(P1 - rotate_mandel(P, Rpi)).max() / np.abs(P).max() < 1e-8
 
 
@@ -101,6 +101,6 @@ def test_int2v_vec_equals_int2v():
 @pytest.mark.parametrize("a,n", [((1, 1, 1), 32), ((5, 1, 1), 48), ((5, 2, 1), 24)])
 def test_tenseurP_vect_flag(a, n):
     for C in (cubic_stiffness(237.4, 134.7, 116.4), spd_triclinic(3)):
-        P1, P2 = tenseurP(*a, C, n), tenseurP(*a, C, n, vect=False)
+        P1, P2 = ptensor(*a, C, n), ptensor(*a, C, n, vect=False)
         assert np.abs(P1 - P2).max() / np.abs(P2).max() < 1e-13
-        assert np.array_equal(P1, tenseurP(*a, C, n, vect=True))          # vect=True is the default
+        assert np.array_equal(P1, ptensor(*a, C, n, vect=True))          # vect=True is the default

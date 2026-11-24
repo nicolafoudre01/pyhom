@@ -77,7 +77,7 @@ def int2v_vec(f, xmin, xmax, ymin, ymax, n=32):
     return np.einsum("n,n...->...", W, f(X.ravel(), Y.ravel()))
 
 
-def tenseurP(a1, a2, a3, C0, n=32, vect=True):
+def ptensor(a1, a2, a3, C0, n=32, vect=True):
     """
     P tensor by direct calculation of the double integral.
     vect=True  : fC0 is evaluated on all n*n quadrature points at once (vectorised, ~15-20x faster)

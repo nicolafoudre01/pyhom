@@ -1,7 +1,7 @@
 import numpy as np
 
 from ..bounds import voigt
-from ..hill import tenseurP
+from ..hill import ptensor
 
 
 def selfconsistent(fv, L_rot, a=(1.0, 1.0, 1.0), n=32,
@@ -17,7 +17,7 @@ def selfconsistent(fv, L_rot, a=(1.0, 1.0, 1.0), n=32,
 
     L_sc = voigt(fv, L_rot)                            # initialisation
     for it in range(1, max_iter + 1):
-        P = tenseurP(a[0], a[1], a[2], L_sc, n)
+        P = ptensor(a[0], a[1], a[2], L_sc, n)
         Q_star = np.linalg.inv(P) - L_sc
         L_moy = sum(f * np.linalg.inv(L + Q_star) for f, L in zip(fv, L_rot))
         L_new = np.linalg.inv(L_moy) - Q_star
@@ -31,6 +31,6 @@ def selfconsistent(fv, L_rot, a=(1.0, 1.0, 1.0), n=32,
     else:
         print("warning: self-consistent loop did not converge")
 
-    P = tenseurP(a[0], a[1], a[2], L_sc, n)
+    P = ptensor(a[0], a[1], a[2], L_sc, n)
     Q_star = np.linalg.inv(P) - L_sc
     return L_sc, Q_star, it
