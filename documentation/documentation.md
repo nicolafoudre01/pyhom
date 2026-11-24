@@ -33,11 +33,11 @@ x=\frac{1-\cos\theta}{2}\in[0,1],\qquad y=\frac{\varphi}{2\pi}\in[0,1]
 \quad\Longrightarrow\quad \frac{d\Omega}{4\pi}=dx\,dy .
 $$
 
-So a uniform grid in $(x,y)$ is a uniform sampling of the sphere, and $\mathbb P=\tfrac14\int_0^1\!\!\int_0^1 F\,dx\,dy$.
+So a uniform grid in $(x,y)$ is a uniform sampling of the sphere, and $\mathbb P=\tfrac14\int_0^1 \int_0^1 F\,dx\,dy$.
 Since $F(-\mathbf n)=F(\mathbf n)$, half of the sphere is enough ($\varphi\in[0,\pi]$, i.e. $y\in[0,\tfrac12]$):
 
 $$
-\boxed{\;\mathbb P=\frac12\int_0^1\!\!\int_0^{1/2} F_{ijkl}(x,y)\;dy\,dx\;}
+\boxed{\;\mathbb P=\frac12\int_0^1 \int_0^{1/2} F_{ijkl}(x,y)\;dy\,dx\;}
 $$
 
 (the factor $\tfrac12$ is `factor = 0.5`, the upper limit $\tfrac12$ is `ymax = 0.5` in `tenseurP`).
@@ -73,8 +73,8 @@ Tensors are $6\times6$ Mandel matrices (order xx, yy, zz, xy, xz, yz): $\tilde P
 `int2v_vec` calls `fC0` once on the whole $n\times n$ grid and sums with one `einsum`.
 
 ```python
-tenseurP(a1, a2, a3, C0, n=32, vect=True)    # vectorised (default), about 3 ms at n = 32
-tenseurP(a1, a2, a3, C0, n=32, vect=False)   # point-by-point loop (reference), about 50 ms
+ptensor(a1, a2, a3, C0, n=32, vect=True)    # vectorised (default), about 3 ms at n = 32
+ptensor(a1, a2, a3, C0, n=32, vect=False)   # point-by-point loop (reference), about 50 ms
 ```
 
 Both give the same result to rounding ($\sim10^{-15}$ relative).
