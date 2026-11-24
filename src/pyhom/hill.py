@@ -20,7 +20,7 @@ _I2 = np.array([p[1] for p in _PAIRS])
 
 def fC0(x, y, C4, a):
     """
-    Integrand of the P tensor at the point (x, y), returned in Mandel notation.
+    Integrand of the P-tensor at the point (x, y), returned in Mandel notation.
     x, y : scalars (-> (6,6)) or arrays of the same shape (...) (-> (..., 6, 6)); the algebra is the same,
            np.einsum("...") and the stacked np.linalg.inv do the loop over the points.
     C4 : stiffness as a 3x3x3x3 array (converted once, outside the integral)
@@ -79,7 +79,7 @@ def int2v_vec(f, xmin, xmax, ymin, ymax, n=32):
 
 def ptensor(a1, a2, a3, C0, n=32, vect=True):
     """
-    P tensor by direct calculation of the double integral.
+    P-tensor by direct calculation of the double integral.
     vect=True  : fC0 is evaluated on all n*n quadrature points at once (vectorised, ~15-20x faster)
     vect=False : point-by-point loop (reference)
     Same algebra in both cases; results agree to rounding (~1e-15 relative).

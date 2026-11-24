@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 from helpers import spd_triclinic, rand_rotation
-from pyhom import (fC0, int2v, ptensor, mandel_to_t4, t4_to_mandel, rotate_mandel,
+from pyhom import (fC0, int2v, int2v_vec, ptensor, mandel_to_t4, t4_to_mandel, rotate_mandel,
                    cubic_stiffness, isotropic_stiffness)
 
 

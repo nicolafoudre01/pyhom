@@ -12,7 +12,7 @@ ordering (xx, yy, zz, xy, xz, yz), with a factor sqrt(2) on shear components.
 """
 from .tensors import (mandel_to_t4, t4_to_mandel, rotate_mandel, cubic_stiffness,
                       isotropic_stiffness, bulk_shear)
-from .hill import fC0, int2v, ptensor
+from .hill import fC0, int2v, int2v_vec, ptensor
 from .bounds import voigt, reuss, hashin_shtrikman
 from .schemes import moritanaka, selfconsistent
 from .phase import Phase, Ellipsoid, LinearElastic, Aggregate
@@ -20,7 +20,7 @@ from .phase import Phase, Ellipsoid, LinearElastic, Aggregate
 __all__ = [
     "mandel_to_t4", "t4_to_mandel", "rotate_mandel", "cubic_stiffness",
     "isotropic_stiffness", "bulk_shear",
-    "fC0", "int2v", "ptensor",
+    "fC0", "int2v", "int2v_vec", "ptensor",
     "voigt", "reuss", "hashin_shtrikman",
     "moritanaka", "selfconsistent",
     "Phase", "Ellipsoid", "LinearElastic", "Aggregate",
