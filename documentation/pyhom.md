@@ -2,7 +2,7 @@
 
 Homogenization of the effective elastic stiffness of heterogeneous materials by mean-field schemes
 (Mori-Tanaka, self-consistent) and classical bounds. Pure `numpy` (about 350 lines), 29 tests.
-Everything rests on one object, the Hill tensor of an ellipsoid (see `P_tensor.md`).
+Everything rests on one object, the Hill tensor of an ellipsoid (see `polarization.md`).
 
 ## Convention (used everywhere)
 
