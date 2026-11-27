@@ -33,11 +33,11 @@ x=\frac{1-\cos\theta}{2}\in[0,1],\qquad y=\frac{\varphi}{2\pi}\in[0,1]
 \quad\Longrightarrow\quad \frac{d\Omega}{4\pi}=dx\,dy .
 $$
 
-So a uniform grid in $(x,y)$ is a uniform sampling of the sphere, and $\mathbb P=\tfrac14\int_0^1 \int_0^1 F\,dx\,dy$.
-Since $F(-\mathbf n)=F(\mathbf n)$, half of the sphere is enough ($\varphi\in[0,\pi]$, i.e. $y\in[0,\tfrac12]$):
+So a uniform grid in $(x,y)$ is a uniform sampling of the sphere, and $\mathbb P=\tfrac14\int_0^1 \int_0^1 F^{C^0}\,dx\,dy$.
+Since $F^{C^0}(-\mathbf n)=F^{C^0}(\mathbf n)$, half of the sphere is enough ($\varphi\in[0,\pi]$, i.e. $y\in[0,\tfrac12]$):
 
 $$
-\boxed{\;\mathbb P=\frac12\int_0^1 \int_0^{1/2} F_{ijkl}(x,y)\;dy\,dx\;}
+\boxed{\;\mathbb P=\frac12\int_0^1 \int_0^{1/2} F^{C^0}_{ijkl}(x,y)\;dy\,dx\;}
 $$
 
 (the factor $\tfrac12$ is `factor = 0.5`, the upper limit $\tfrac12$ is `ymax = 0.5` in `tenseurP`).
@@ -49,7 +49,7 @@ Tensor-product Gauss-Legendre with $n$ points per direction (`np.polynomial.lege
 $$
 x_p=\tfrac{1+g_p}{2},\ w^x_p=\tfrac{w_p}{2};\qquad
 y_q=\tfrac{1+g_q}{4},\ w^y_q=\tfrac{w_q}{4};\qquad
-\mathbb P\simeq\frac12\sum_{p=1}^{n}\sum_{q=1}^{n} w^x_p\,w^y_q\;F(x_p,y_q).
+\mathbb P\simeq\frac12\sum_{p=1}^{n}\sum_{q=1}^{n} w^x_p\,w^y_q\;F^{C^0}(x_p,y_q).
 $$
 
 $n^2$ evaluations of $F$ (default $n=32$: 1024 points).
@@ -65,7 +65,7 @@ Tensors are $6\times6$ Mandel matrices (order xx, yy, zz, xy, xz, yz): $\tilde P
 | $\boldsymbol\xi=(\sin\theta\cos\varphi/a_1,\ \sin\theta\sin\varphi/a_2,\ \cos\theta/a_3)$ | `X` |
 | $K_{ik}=C^0_{ijkl}\xi_j\xi_l$ | `np.einsum("ijkl,...j,...l->...ik", C4, X, X)` |
 | $\mathbf N=\mathbf K^{-1}$ | `np.linalg.inv` |
-| four-term sum $F_{IJ}$, $I=(i_1,i_2)$, $J=(j_1,j_2)$ | `CXX[i1,j1]*X[i2]*X[j2] + CXX[i2,j1]*X[i1]*X[j2] + CXX[i1,j2]*X[i2]*X[j1] + CXX[i2,j2]*X[i1]*X[j1]` |
+| four-term sum $F^{C^0}_{IJ}$, $I=(i_1,i_2)$, $J=(j_1,j_2)$ | `CXX[i1,j1]*X[i2]*X[j2] + ...` | `CXX[i1,j1]*X[i2]*X[j2] + CXX[i2,j1]*X[i1]*X[j2] + CXX[i1,j2]*X[i2]*X[j1] + CXX[i2,j2]*X[i1]*X[j1]` |
 | Mandel factors | `RES * W[:,None] * W[None,:]` |
 
 ### Vectorisation
