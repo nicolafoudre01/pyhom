@@ -14,12 +14,12 @@ K_{ik}(\boldsymbol\xi) = C^0_{ijkl}\,\xi_j\,\xi_l,\qquad
 \mathbf N(\boldsymbol\xi) = \mathbf K(\boldsymbol\xi)^{-1}
 $$
 
-($\mathbf K$ is the acoustic tensor). The Hill tensor is the average over the unit sphere $S^2$ of the symmetrised product $N_{ik}\xi_j\xi_l$:
+($\mathbf K$ is the acoustic tensor). The Hill tensor is the average over the unit sphere $S^2$ of the symmetrised product $N_{ik}\xi_j\xi_l$, also known as the modified Green tensor associated to $C^0$:
 
 $$
-P_{ijkl} = \frac1{4\pi}\int_{S^2} \tfrac14\, F_{ijkl}(\mathbf n)\; d\Omega,
+P_{ijkl} = \frac1{4\pi}\int_{S^2} \tfrac14\, F_{ijkl}^{C^0}(\mathbf n)\; d\Omega,
 \qquad
-F_{ijkl} = N_{ik}\,\xi_j\xi_l + N_{jk}\,\xi_i\xi_l + N_{il}\,\xi_j\xi_k + N_{jl}\,\xi_i\xi_k .
+F_{ijkl}^{C^0} = N_{ik}\,\xi_j\xi_l + N_{jk}\,\xi_i\xi_l + N_{il}\,\xi_j\xi_k + N_{jl}\,\xi_i\xi_k .
 $$
 
 Related quantities: Eshelby tensor $\mathbb S=\mathbb P:\mathbb C^0$; interaction tensor $\mathbb Q^*=\mathbb P^{-1}-\mathbb C^0$ (used by the schemes).
